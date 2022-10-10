@@ -5,11 +5,4 @@
 [node name="NivelTest" type="Node2D"]
 
 [node name="player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 280, 50 )
-mass = 100.0
-gravity_scale = 2.0
-
-[node name="player2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 274, 295 )
-mode = 1
-gravity_scale = 0.0
+position = Vector2( 427, 135 )
