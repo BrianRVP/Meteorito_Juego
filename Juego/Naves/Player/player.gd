@@ -11,8 +11,18 @@ var direc_rotacion:int =0
 
 ##Aributos Onready
 onready var canion:canion=$canion
+onready var laser:Rayolaser =$LaserBeam2D
 
 ## Metodos 
+func _unhandled_input(event: InputEvent) -> void:
+	#Disparo Rayo
+	if event.is_action_pressed("disparo secundario"):
+		laser.set_is_casting(true)
+	
+	if event.is_action_released("disparo secundario"):
+		laser.set_is_casting(false)
+
+
 func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	rad2deg(rotation)
 	empuje.rotated(rotation)

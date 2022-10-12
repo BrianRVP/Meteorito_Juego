@@ -38,13 +38,13 @@ func almacenar_puntos_disparo()-> void:
 func disparar()-> void:
 	esta_enfriado=false
 	timer_Enfriamiento.start()
-	disparoSFx.play()#opcion1
+	#disparoSFx.play()#opcion1
 	for punto_disparo in puntos_disparos:
 		disparoSFx.play()#opcion2
 		var new_proyectil:Proyectil=proyectil.instance()
 		new_proyectil.crear(punto_disparo.global_position,get_owner().rotation,velocidad_proyectil,danio_Proyectil)
 		Eventos.emit_signal("disparo",new_proyectil)
-		#disparoSFx.stop()
+		
 
 
 func _on_TimerDeEnfriamiento_timeout() -> void:
