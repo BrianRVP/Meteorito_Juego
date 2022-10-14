@@ -3,6 +3,7 @@ extends RigidBody2D
  ##Export
 export var potenciar_motor:int =20
 export var potenciar_rotacion:int =20
+export var estela_maxima:int=150
 
 
 ##Atributos
@@ -12,6 +13,10 @@ var direc_rotacion:int =0
 ##Aributos Onready
 onready var canion:canion=$canion
 onready var laser:Rayolaser =$LaserBeam2D
+onready var estela1 :estela=$posicionTrail/Trail2D
+onready var estela2 :estela=$posicionTrail2/Trail2D
+onready var Motor_SFX:Motor=$SFXMotor
+
 
 ## Metodos 
 func _unhandled_input(event: InputEvent) -> void:
@@ -21,16 +26,35 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_released("disparo secundario"):
 		laser.set_is_casting(false)
+	
+	##Control Estela1
+	if event.is_action_pressed("mover_adelante"):
+		estela1.set_max_points(estela_maxima)
+	elif event.is_action_pressed("mover_atras"):
+		estela1.set_max_points(0)
+		
+	
+	##control Estela2
+	if event.is_action_pressed("mover_adelante"):
+		estela2.set_max_points(estela_maxima)
+		Motor_SFX.sonido_on()
+	elif event.is_action_pressed("mover_atras"):
+		estela2.set_max_points(0)
+		Motor_SFX.sonido_on()
+	if (event.is_action_released("mover_adelante")or event.is_action_released("mover_atras")):
+		Motor_SFX.sonido_off()
 
 
-func _integrate_forces(state: Physics2DDirectBodyState) -> void:
+
+
+func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	rad2deg(rotation)
 	empuje.rotated(rotation)
 	apply_central_impulse(empuje.rotated(rotation))
 	apply_torque_impulse(direc_rotacion * potenciar_rotacion)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	player_input()
 	
 

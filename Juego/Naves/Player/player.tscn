@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Juego/Naves/Player/player1.png" type="Texture" id=1]
 [ext_resource path="res://Juego/Naves/Player/physicsmaterial.tres" type="PhysicsMaterial" id=2]
 [ext_resource path="res://Juego/Naves/Player/player.gd" type="Script" id=3]
 [ext_resource path="res://Juego/Proyectiles/canion.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Juego/Proyectiles/laser/LaserBeam2D.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Juego/Naves/Player/Trail/Trail2D.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Juego/Naves/Player/Motor/SFXMotor.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 26.106
@@ -14,16 +16,17 @@ radius = 26.106
 ]]
 z_index = 60
 z_as_relative = false
+collision_mask = 22
 physics_material_override = ExtResource( 2 )
 gravity_scale = 0.0
 can_sleep = false
 linear_damp = 3.0
 angular_damp = 1.0
 script = ExtResource( 3 )
+estela_maxima = 160
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708
-scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -34,12 +37,34 @@ shape = SubResource( 1 )
 [node name="canion" parent="." instance=ExtResource( 4 )]
 
 [node name="Positionderecha" parent="canion" index="0"]
-position = Vector2( -1.5, 24 )
+position = Vector2( -2, 32 )
 
 [node name="Positionizquierda" parent="canion" index="1"]
-position = Vector2( -1.5, -24 )
+position = Vector2( -2, -32 )
 
 [node name="LaserBeam2D" parent="." instance=ExtResource( 5 )]
 position = Vector2( 25.4271, 0 )
+
+[node name="posicionTrail" type="Position2D" parent="."]
+position = Vector2( -14, -44 )
+
+[node name="Trail2D" parent="posicionTrail" instance=ExtResource( 6 )]
+points = PoolVector2Array( 0, 0, 80, 0 )
+is_emitting = true
+lifetime = 0.6
+max_points = 150
+target_path = NodePath("..")
+
+[node name="posicionTrail2" type="Position2D" parent="."]
+position = Vector2( -14, 44 )
+
+[node name="Trail2D" parent="posicionTrail2" instance=ExtResource( 6 )]
+points = PoolVector2Array( 0, 0, 80, 0 )
+is_emitting = true
+lifetime = 0.6
+max_points = 150
+target_path = NodePath("..")
+
+[node name="SFXMotor" parent="." instance=ExtResource( 7 )]
 
 [editable path="canion"]
