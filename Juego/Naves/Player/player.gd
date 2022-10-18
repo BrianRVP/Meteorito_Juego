@@ -9,6 +9,7 @@ export var potenciar_rotacion:int =20
 export var estela_maxima:int=150
 
 
+
 ##Atributos
 var empuje:Vector2 =Vector2.ZERO
 var direc_rotacion:int =0
@@ -107,9 +108,8 @@ func controlador_estado(nuevo_estado:int)->void:
 		ESTADO.MUERTO:
 			colisionador.set_deferred("disabled",true)
 			canion.set_puede_disparar(true)
+			Eventos.emit_signal("nave_destruida",global_position,3)
 			queue_free()
-		_:
-			print("Error de estado")
 	estado_actual = nuevo_estado
 
 func esta_input_activo()->bool:
@@ -121,3 +121,9 @@ func esta_input_activo()->bool:
 func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 	if anim_name == "spawn":
 		controlador_estado(ESTADO.VIVO)
+
+func destruir() -> void:
+	controlador_estado(ESTADO.MUERTO)
+	
+
+

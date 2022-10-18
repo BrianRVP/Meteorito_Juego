@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Reference",
+"class": "Enemigo",
+"language": "GDScript",
+"path": "res://Juego/enemigos/Node2D.gd"
+}, {
 "base": "AudioStreamPlayer2D",
 "class": "Motor",
 "language": "GDScript",
@@ -37,7 +42,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "canion",
 "language": "GDScript",
-"path": "res://canion.gd"
+"path": "res://Juego/Proyectiles/canion.gd"
 }, {
 "base": "Line2D",
 "class": "estela",
@@ -45,6 +50,7 @@ _global_script_classes=[ {
 "path": "res://Juego/Naves/Player/Trail/Trail2D.gd"
 } ]
 _global_script_class_icons={
+"Enemigo": "",
 "Motor": "",
 "Nivel": "",
 "Player": "",
@@ -119,6 +125,7 @@ disparo_principal={
 2d_physics/layer_3="meteoritos"
 2d_physics/layer_4="proyectil_player"
 2d_physics/layer_5="proyectil_enemigo"
+2d_physics/layer_6="laser_player"
 
 [physics]
 
