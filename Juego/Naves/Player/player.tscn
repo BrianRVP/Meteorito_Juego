@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Juego/Naves/Player/player1.png" type="Texture" id=1]
 [ext_resource path="res://Juego/Naves/Player/physicsmaterial.tres" type="PhysicsMaterial" id=2]
@@ -9,7 +9,39 @@
 [ext_resource path="res://Juego/Naves/Player/Motor/SFXMotor.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 26.106
+radius = 29.8246
+
+[sub_resource type="Animation" id=2]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "spawn"
+length = 1.8
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6, 1.2, 1.8 ),
+"transitions": PoolRealArray( 1, 1.00001, 1, 1.00001 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 1, 1 ), Vector2( 0.5, 0.5 ), Vector2( 1, 1 ) ]
+}
 
 [node name="player" type="RigidBody2D" groups=[
 "player",
@@ -27,11 +59,11 @@ estela_maxima = 160
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708
+scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2( -5.19131, -0.23597 )
+position = Vector2( -5.19128, 0.953224 )
 shape = SubResource( 1 )
 
 [node name="canion" parent="." instance=ExtResource( 4 )]
@@ -46,6 +78,7 @@ position = Vector2( -2, -32 )
 position = Vector2( 25.4271, 0 )
 
 [node name="posicionTrail" type="Position2D" parent="."]
+visible = false
 position = Vector2( -14, -44 )
 
 [node name="Trail2D" parent="posicionTrail" instance=ExtResource( 6 )]
@@ -56,6 +89,7 @@ max_points = 150
 target_path = NodePath("..")
 
 [node name="posicionTrail2" type="Position2D" parent="."]
+visible = false
 position = Vector2( -14, 44 )
 
 [node name="Trail2D" parent="posicionTrail2" instance=ExtResource( 6 )]
@@ -66,5 +100,12 @@ max_points = 150
 target_path = NodePath("..")
 
 [node name="SFXMotor" parent="." instance=ExtResource( 7 )]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "spawn"
+anims/default = SubResource( 2 )
+anims/spawn = SubResource( 3 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 
 [editable path="canion"]
